@@ -5,19 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller
 {
-    public function __construct()
-    {
-        // Memastikan semua metode dilindungi oleh autentikasi Sanctum
-        $this->middleware('auth:sanctum');
-
-        // Hanya admin yang bisa mengakses metode store, update, dan destroy
-        $this->middleware('role:admin')->only(['store', 'update', 'destroy']);
-    }
-
     public function index()
     {
         return Product::with('category', 'subCategory')->get();
@@ -25,10 +15,6 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        // Memastikan hanya admin yang bisa menambahkan produk
-        if (!Gate::allows('isAdmin')) {
-            return response()->json(['message' => 'Forbidden'], 403);
-        }
 
         $data = $request->validate([
             'name' => 'required|string|max:255',

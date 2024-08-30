@@ -9,18 +9,8 @@ use Illuminate\Support\Facades\Log; // Tambahkan ini
 
 class CategoryController extends Controller
 {
-    public function __construct()
-    {
-        // Memastikan semua metode dilindungi oleh autentikasi JWT
-        $this->middleware('auth:api');
-
-        // Hanya admin yang bisa mengakses metode store, update, dan destroy
-        $this->middleware('role:admin')->only(['store', 'update', 'destroy']);
-    }
-
     public function index()
     {
-        Log::info("Accessing index method in CategoryController");
         return Category::with('subCategories')->get();
     }
 

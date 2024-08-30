@@ -20,14 +20,14 @@
     </ion-list-header>
 
     <div class="card-container">
-        <ion-card (click)="this">
+        <ion-card (click)="this" *ngFor="let category of categories">
             <ion-card-header>
-                <ion-img src="assets/img/Groceries/Groceries.png" alt="Mi Goreng Rendang"></ion-img>
-                <ion-card-title class="custom-card-title">Groceries</ion-card-title>
+                <ion-img src="https://picsum.photos/200/300" [alt]="category.name"></ion-img>
+                <ion-card-title class="custom-card-title">{{ category.name }}</ion-card-title>
             </ion-card-header>
         </ion-card>
 
-        <ion-card (click)="this">
+        <!-- <ion-card (click)="this">
             <ion-card-header>
                 <ion-img src="assets/img/Snack/Chips.png" alt="Mi Goreng Rendang"></ion-img>
                 <ion-card-title class="custom-card-title">Snack</ion-card-title>
@@ -46,17 +46,16 @@
                 <ion-img src="assets/img/Essential Groceries/Essential Groceries.png" alt="Mi Goreng Rendang"></ion-img>
                 <ion-card-title class="custom-card-title">Essential Groceries</ion-card-title>
             </ion-card-header>
-        </ion-card>
+        </ion-card> -->
     </div>
 
     <!-- Best Selling Section -->
     <ion-list>
         <ion-list-header>
             <ion-label>Best Seller</ion-label>
-            <ion-button fill="clear" slot="end">Tampilkan semua</ion-button>
         </ion-list-header>
         <div class="horizontal-scroll">
-            <div class="best-seller-container">
+            <div class="best-seller-container" *ngFor="let product of products">
                 <ion-card>
                     <img src="assets/img/Mie/indomie/Mi Goreng Rendang.png" alt="Mi Goreng Rendang" />
                     <ion-card-content>

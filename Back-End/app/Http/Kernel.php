@@ -43,5 +43,6 @@ class Kernel extends HttpKernel
         'cek.admin' => \App\Http\Middleware\CekRoleAdmin::class,
         'jwt.auth' => \App\Http\Middleware\CustomAuthenticateJWT::class,
         'jwt.refresh' => \App\Http\Middleware\CustomRefreshJWT::class,
+        'jwt.user' => \App\Http\Middleware\UserAuth::class,
     ];    
 }

@@ -256,3 +256,8 @@ ion-header ion-title.custom-font {
     height: 10px;
     /* Ini membuat kontainer mengambil tinggi penuh viewport */
 }
+ion-list-header>ion-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}

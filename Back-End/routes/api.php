@@ -66,9 +66,8 @@ Route::middleware(['jwt.auth', 'role:admin'])->group(function () {
 });
 
 // Rute yang memerlukan autentikasi pengguna menggunakan JWT
-Route::middleware(['jwt.auth'])->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/me', [AuthController::class, 'me']);
+Route::middleware('jwt.user')->group(function () {
+    Route::get('me', [AuthController::class, 'me']);
 
     // Produk, kategori, dan sub-kategori (read-only untuk pengguna)
     Route::get('products', [ProductController::class, 'index']);
