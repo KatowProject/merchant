@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 class Kernel extends HttpKernel
 {
     protected $middleware = [
-        // Middleware global yang diterapkan pada setiap request
+        \Illuminate\Http\Middleware\HandleCors::class
     ];
 
     protected $middlewareGroups = [
@@ -36,8 +36,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' => \App\Http\Middleware\RoleMiddleware::class,
         'admin' => \App\Http\Middleware\EnsureAdmin::class,
-        'jwt.auth' => \App\Http\Middleware\CustomAuthenticateJWT::class,
-        'jwt.refresh' => \App\Http\Middleware\CustomRefreshJWT::class,
     ];
     
     protected $routeMiddleware = [

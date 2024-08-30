@@ -1,0 +1,258 @@
+/* General Content Styling */
+ion-content.scroll-content {
+    --padding-top: 0;
+    --padding-bottom: 0;
+    --overflow: auto;
+    /* Ensure content is scrollable */
+}
+
+/* Card Styling */
+ion-card img {
+    width: 100%;
+    height: auto;
+}
+
+/* Custom Styles for Best Seller Section */
+ion-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+}
+
+ion-list-header ion-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+ion-list-header ion-button {
+    font-size: 14px;
+    color: #3880ff;
+}
+
+ion-grid {
+    margin-top: 16px;
+}
+
+ion-col {
+    padding: 0 10px;
+}
+
+ion-card {
+    margin-bottom: 16px;
+}
+
+.star-rating {
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+.star-rating .star {
+    color: #f8c31c;
+}
+
+.small-text {
+    font-size: 14px;
+    color: #888;
+    margin-top: 8px;
+}
+
+/* Horizontal Scroll Styling */
+.horizontal-scroll {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 10px;
+}
+
+.best-seller-container {
+    display: inline-flex;
+    padding-right: 10px;
+}
+
+.best-seller-container ion-card {
+    flex: 0 0 auto;
+    width: 200px;
+    margin-right: 10px;
+}
+
+.best-seller-container ion-card:last-child {
+    margin-right: 0;
+}
+
+/* Footer Styling */
+ion-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+ion-footer ion-tab-bar {
+    background-color: #f8f8f8;
+    border-top: 1px solid #ddd;
+    display: flex;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+
+ion-footer ion-tab-button {
+    flex: 1;
+    color: #444;
+    font-size: 14px;
+}
+
+ion-footer ion-tab-button[tab="home"] {
+    color: #3880ff;
+}
+
+/* Custom Toolbar Styling */
+.custom-toolbar {
+    --background: #0000ff;
+    --color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+}
+
+.custom-toolbar ion-title,
+.custom-toolbar ion-icon,
+.custom-toolbar img,
+.custom-toolbar span {
+    color: #ffffff !important;
+}
+
+.custom-toolbar img {
+    width: 50px;
+    height: auto;
+    margin-right: 3px;
+}
+
+/* Custom Searchbar Styling */
+ion-searchbar.custom-searchbar {
+    --background: #ffffff !important;
+    --color: #000000 !important;
+    flex: 1;
+    width: auto;
+    border-radius: 12px;
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
+
+/* Custom Add Button Styling */
+.custom-add-button {
+    --background: #3880ff;
+    --background-hover: #3171e0;
+    --border-radius: 12px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --min-height: 48px;
+    font-weight: bold;
+}
+
+.custom-add-button ion-icon {
+    margin-right: 2px;
+}
+
+/* Custom Title Logo Styling */
+.custom-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    text-align: center;
+}
+
+.custom-title .logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding-top: 5px;
+}
+
+.custom-title .logo {
+    width: 200px;
+    height: auto;
+}
+
+/* Card Container Styling */
+.card-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    /* Agar kartu dapat menyesuaikan lebar layar */
+    padding: 0 10px;
+}
+
+.card-container ion-card {
+    flex: 1 0 calc(25% - 20px);
+    /* Menyesuaikan lebar kartu agar empat kartu dalam satu baris */
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.card-container ion-card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-container ion-img {
+    width: 50px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.custom-card-title {
+    font-size: smaller;
+    text-align: center;
+}
+
+.custom-card-titlee {
+    font-size: smaller;
+}
+
+.card-title-small {
+    text-transform: lowercase;
+}
+
+.small-text {
+    font-size: 0.8em;
+}
+
+.horizontal-scroll {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.best-seller-container {
+    display: inline-flex;
+}
+
+.best-seller-container ion-card {
+    flex: 0 0 auto;
+    width: 200px;
+    margin-right: 10px;
+}
+
+/* Custom Font for ion-title */
+ion-header ion-title.custom-font {
+    font-family: "Times New Roman", sans-serif !important;
+    font-size: 8px !important;
+    font-weight: plain !important;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10px;
+    /* Ini membuat kontainer mengambil tinggi penuh viewport */
+}

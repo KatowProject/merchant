@@ -1,0 +1,71 @@
+<ion-header>
+    <ion-toolbar class="custom-toolbar">
+        <ion-title class="custom-title">
+            <img src="assets/img/logo.png" alt="Logo" class="logo" />
+            <div class="logo-text">
+                <span class="logo-name">Groceria</span>
+            </div>
+        </ion-title>
+        <div class="welcome-message">
+            <ion-title>Hi,.. <br />What are you looking for today?</ion-title>
+        </div>
+        <ion-searchbar class="custom-searchbar" placeholder="Cari produk"></ion-searchbar>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="scroll-content">
+    <ion-list-header>
+        <ion-label>Categories</ion-label>
+        <ion-button fill="clear" slot="end">Tampilkan semua</ion-button>
+    </ion-list-header>
+
+    <div class="card-container">
+        <ion-card (click)="this">
+            <ion-card-header>
+                <ion-img src="assets/img/Groceries/Groceries.png" alt="Mi Goreng Rendang"></ion-img>
+                <ion-card-title class="custom-card-title">Groceries</ion-card-title>
+            </ion-card-header>
+        </ion-card>
+
+        <ion-card (click)="this">
+            <ion-card-header>
+                <ion-img src="assets/img/Snack/Chips.png" alt="Mi Goreng Rendang"></ion-img>
+                <ion-card-title class="custom-card-title">Snack</ion-card-title>
+            </ion-card-header>
+        </ion-card>
+
+        <ion-card (click)="this">
+            <ion-card-header>
+                <ion-img src="assets/img/Drink/Drink.png" alt="Mi Goreng Rendang"></ion-img>
+                <ion-card-title class="custom-card-title">Drink</ion-card-title>
+            </ion-card-header>
+        </ion-card>
+
+        <ion-card (click)="this">
+            <ion-card-header>
+                <ion-img src="assets/img/Essential Groceries/Essential Groceries.png" alt="Mi Goreng Rendang"></ion-img>
+                <ion-card-title class="custom-card-title">Essential Groceries</ion-card-title>
+            </ion-card-header>
+        </ion-card>
+    </div>
+
+    <!-- Best Selling Section -->
+    <ion-list>
+        <ion-list-header>
+            <ion-label>Best Seller</ion-label>
+            <ion-button fill="clear" slot="end">Tampilkan semua</ion-button>
+        </ion-list-header>
+        <div class="horizontal-scroll">
+            <div class="best-seller-container">
+                <ion-card>
+                    <img src="assets/img/Mie/indomie/Mi Goreng Rendang.png" alt="Mi Goreng Rendang" />
+                    <ion-card-content>
+                        <ion-card-title class="custom-card-titlee">Mi Goreng Rendang</ion-card-title>
+                        <p class="small-text">harga: rp xxx.xxx</p>
+                        <ion-button class="button-container" size="default">+ Card</ion-button>
+                    </ion-card-content>
+                </ion-card>
+            </div>
+        </div>
+    </ion-list>
+</ion-content>

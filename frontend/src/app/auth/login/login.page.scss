@@ -1,0 +1,43 @@
+.custom-toolbar {
+    --background: #0000ff;
+    --color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+}
+
+.custom-toolbar ion-title,
+.custom-toolbar ion-icon,
+.custom-toolbar img,
+.custom-toolbar span {
+    color: #ffffff !important;
+}
+
+.custom-toolbar img {
+    width: 50px;
+    height: auto;
+    margin-right: 3px;
+}
+
+/* Custom Title Logo Styling */
+.custom-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    text-align: center;
+}
+
+.custom-title .logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding-top: 5px;
+}
+
+.custom-title .logo {
+    width: 200px;
+    height: auto;
+}
