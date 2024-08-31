@@ -9,7 +9,7 @@ use Firebase\JWT\Key;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserAuth
+class AdminAuth
 {
     /**
      * Handle an incoming request.
@@ -24,9 +24,8 @@ class UserAuth
 
             $decoded = JWT::decode($jwt, $key);
             $user = User::find($decoded->user_id);
-            $user->role = $decoded->role;
 
-            if ($decoded->role == "user") {    
+            if ($user->role == "admin") {
                 $request->request->add([
                     'userauth' => $user
                 ]);

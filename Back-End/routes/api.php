@@ -26,45 +26,40 @@ use App\Http\Controllers\MainController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// Rute untuk admin
-Route::post('/admin/register', [AdminController::class, 'register']);
-Route::post('/admin/login', [AdminController::class, 'login']);
-
 // Rute yang memerlukan autentikasi admin menggunakan JWT
-Route::middleware(['jwt.auth', 'role:admin'])->group(function () {
-    Route::post('/admin/logout', [AdminController::class, 'logout']);
-    Route::get('/admin/me', [AdminController::class, 'me']);
+// Route::middleware('jwt.admin')->group(function () {
+//     Route::get('/admin/me', [AdminController::class, 'me']);
     
-    // CRUD untuk produk, kategori, dan sub-kategori
-    Route::apiResource('products', ProductController::class);
-    Route::apiResource('categories', CategoryController::class);
-    Route::apiResource('sub-categories', SubCategoryController::class);
+//     // CRUD untuk produk, kategori, dan sub-kategori
+//     Route::apiResource('products', ProductController::class);
+//     Route::apiResource('categories', CategoryController::class);
+//     Route::apiResource('sub-categories', SubCategoryController::class);
 
-    // Dashboard dan manajemen konten
-    Route::get('admin/dashboard', [AdminController::class, 'dashboard']);
-    Route::apiResource('admin/blog-posts', AdminBlogPostController::class);
-    Route::apiResource('admin/faqs', AdminFaqController::class);
+//     // Dashboard dan manajemen konten
+//     Route::get('admin/dashboard', [AdminController::class, 'dashboard']);
+//     Route::apiResource('admin/blog-posts', AdminBlogPostController::class);
+//     Route::apiResource('admin/faqs', AdminFaqController::class);
 
-    // Manajemen pengguna
-    Route::get('admin/users', [AdminController::class, 'listUsers']);
-    Route::get('admin/users/{user}', [AdminController::class, 'showUser']);
-    Route::put('admin/users/{user}', [AdminController::class, 'updateUser']);
-    Route::delete('admin/users/{user}', [AdminController::class, 'deleteUser']);
+//     // Manajemen pengguna
+//     Route::get('admin/users', [AdminController::class, 'listUsers']);
+//     Route::get('admin/users/{user}', [AdminController::class, 'showUser']);
+//     Route::put('admin/users/{user}', [AdminController::class, 'updateUser']);
+//     Route::delete('admin/users/{user}', [AdminController::class, 'deleteUser']);
 
-    // Manajemen pesanan
-    Route::get('admin/orders', [AdminController::class, 'listOrders']);
-    Route::get('admin/orders/{order}', [AdminController::class, 'showOrder']);
-    Route::put('admin/orders/{order}', [AdminController::class, 'updateOrder']);
+//     // Manajemen pesanan
+//     Route::get('admin/orders', [AdminController::class, 'listOrders']);
+//     Route::get('admin/orders/{order}', [AdminController::class, 'showOrder']);
+//     Route::put('admin/orders/{order}', [AdminController::class, 'updateOrder']);
 
-    // Laporan dan statistik
-    Route::get('admin/reports/sales', [AdminController::class, 'salesReport']);
-    Route::get('admin/reports/popular-products', [AdminController::class, 'popularProductsReport']);
-    Route::get('admin/reports/user-activity', [AdminController::class, 'userActivityReport']);
+//     // Laporan dan statistik
+//     Route::get('admin/reports/sales', [AdminController::class, 'salesReport']);
+//     Route::get('admin/reports/popular-products', [AdminController::class, 'popularProductsReport']);
+//     Route::get('admin/reports/user-activity', [AdminController::class, 'userActivityReport']);
 
-    // Pengaturan aplikasi
-    Route::get('admin/settings', [AdminController::class, 'getSettings']);
-    Route::put('admin/settings', [AdminController::class, 'updateSettings']);
-});
+//     // Pengaturan aplikasi
+//     Route::get('admin/settings', [AdminController::class, 'getSettings']);
+//     Route::put('admin/settings', [AdminController::class, 'updateSettings']);
+// });
 
 // Rute yang memerlukan autentikasi pengguna menggunakan JWT
 Route::middleware('jwt.user')->group(function () {
@@ -89,9 +84,11 @@ Route::middleware('jwt.user')->group(function () {
     Route::get('categories', [CategoryController::class, 'index']);
     Route::get('categories/{category}', [CategoryController::class, 'show']);
     Route::get('categories/{category}/products', [CategoryController::class, 'products']);
-    Route::get('sub-categories', [SubCategoryController::class, 'index']);
-    Route::get('sub-categories/{subCategory}', [SubCategoryController::class, 'show']);
-    
+
+
+    // Route::get('sub-categories', [SubCategoryController::class, 'index']);
+    // Route::get('sub-categories/{subCategory}', [SubCategoryController::class, 'show']);
+
     // Pesanan pengguna
     // Route::get('orders', [OrderController::class, 'index']);
     // Route::post('orders', [OrderController::class, 'store']);
@@ -100,6 +97,10 @@ Route::middleware('jwt.user')->group(function () {
     // Route::delete('orders/{order}', [OrderController::class, 'destroy']);
 });
 
-// Rute publik tambahan (jika diperlukan)
-Route::get('public/products', [ProductController::class, 'publicIndex']);
-Route::get('public/categories', [CategoryController::class, 'publicIndex']);
+Route::middleware('jwt.admin')->prefix('admin')->group(function () {
+    Route::get('dashboard', [AdminController::class, 'dashboard']);
+
+
+    Route::get('me', [MainController::class, 'me']);
+    Route::put('me', [MainController::class, 'updateProfile']);
+});

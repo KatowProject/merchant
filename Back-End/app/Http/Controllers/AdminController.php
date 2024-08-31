@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,25 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AdminController extends Controller
 {
+    public function dashboard()
+    {
+        $total_produk = Product::count();
+        $pesanan_masuk = Order::where('status', 'pending')->count();
+        $total_pengguna = User::count();
+        $pemasukan_month = Order::where('status', 'completed')->whereMonth('created_at', date('m'))->sum('total_amount');
+
+        // ambil 5 transaksi terakhir
+        $transaksi_terakhir = Order::with('user')->orderBy('created_at', 'desc')->limit(5)->get();
+
+        return response()->json([
+            'total_produk' => $total_produk,
+            'pesanan_masuk' => $pesanan_masuk,
+            'total_pengguna' => $total_pengguna,
+            'pemasukan_month' => $pemasukan_month,
+            'transaksi_terakhir' => $transaksi_terakhir
+        ]);
+    }
+
     /**
      * Register a new admin.
      */

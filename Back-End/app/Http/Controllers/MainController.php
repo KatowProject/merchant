@@ -65,15 +65,21 @@ class MainController extends Controller
         $best_seller->load('category');
         $best_seller->load('subCategory');
 
+        // get random 10 products
+        $recommended = $this->m_product->inRandomOrder()->limit(10)->get();
+        $recommended->load('category');
+        $recommended->load('subCategory');
+
 
         // get all product (limit 25)
-        $products = $this->m_product->limit(25)->get();
+        $products = $this->m_product->limit(50)->get();
         $products->load('category');
         $products->load('subCategory');
 
         return response()->json([
             'categories' => $categories,
             'best_seller' => $best_seller,
+            'recommended' => $recommended,
             'products' => $products
         ]);
     }

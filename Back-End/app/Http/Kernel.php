@@ -44,5 +44,6 @@ class Kernel extends HttpKernel
         'jwt.auth' => \App\Http\Middleware\CustomAuthenticateJWT::class,
         'jwt.refresh' => \App\Http\Middleware\CustomRefreshJWT::class,
         'jwt.user' => \App\Http\Middleware\UserAuth::class,
+        'jwt.admin' => \App\Http\Middleware\AdminAuth::class,
     ];    
 }

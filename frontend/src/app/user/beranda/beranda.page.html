@@ -58,22 +58,48 @@
         <!-- Best Selling Section -->
         <ion-list>
             <ion-list-header>
-                <ion-label>Best Seller</ion-label>
+              <ion-label>Best Seller</ion-label>
+            </ion-list-header>
+            <div *ngIf="discovery?.best_seller?.length > 0; else noBestSeller" class="horizontal-scroll">
+              <div class="best-seller-container" *ngFor="let product of discovery?.best_seller">
+                <ion-card>
+                  <img [src]="product.image" [alt]="product.name" (click)="getProductDetail(product)" />
+                  <ion-card-content>
+                    <ion-card-title class="custom-card-title">{{ product.name }}</ion-card-title>
+                    <p class="small-text ion-text-center">Rp {{ product.price }}</p>
+                    <ion-button class="button-container" expand="block" size="default" (click)="addToCart(product.id)">+ Cart</ion-button>
+                  </ion-card-content>
+                </ion-card>
+              </div>
+            </div>
+            <ng-template #noBestSeller>
+              <ion-row>
+                <ion-col size="12" style="text-align: center; padding: 20px;">
+                  <ion-text color="medium">
+                    <h2>No best sellers available</h2>
+                  </ion-text>
+                </ion-col>
+              </ion-row>
+            </ng-template>
+        </ion-list>
+
+        <ion-list>
+            <ion-list-header>
+              <ion-label>Recommended</ion-label>
             </ion-list-header>
             <div class="horizontal-scroll">
-                <div class="best-seller-container" *ngFor="let product of discovery?.best_seller">
+                <div class="best-seller-container" *ngFor="let product of discovery?.recommended">
                     <ion-card>
-                        <img [src]="product.image" [alt]="product.name" (click)="getProductDetail(product)" />
+                        <img [src]="product.image" [alt]="product.name" />
                         <ion-card-content>
                             <ion-card-title class="custom-card-title">{{ product.name }}</ion-card-title>
-                            <p class="small-text ion-text-center">Rp {{ product.price }}</p>
+                            <p class="small-text ion-text-ceter">Rp {{ product.price }}</p>
                             <ion-button class="button-container" expand="block" size="default" (click)="addToCart(product.id)">+ Cart</ion-button>
                         </ion-card-content>
                     </ion-card>
                 </div>
             </div>
         </ion-list>
-
 
         <!-- List Product 25 Vertical Scroll -->
         <ion-list>

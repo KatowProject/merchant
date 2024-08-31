@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { MainTabsComponent } from './user/main-tabs/main-tabs.component';
 import { authGuardGuard } from './guard/auth-guard.guard';
+import { MenuComponent } from './admin/menu/menu.component';
 
 const routes: Routes = [
   {
@@ -42,8 +43,35 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'login',
-    loadChildren: () => import('./auth/login/login.module').then(m => m.LoginPageModule)
+    path: 'admin',
+    component: MenuComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        loadChildren: () => import('./admin/dashboard/dashboard.module').then(m => m.DashboardPageModule)
+      },
+      {
+        path: 'products',
+        loadChildren: () => import('./admin/products/products.module').then(m => m.ProductsPageModule)
+      },
+      {
+        path: 'categories',
+        loadChildren: () => import('./admin/categories/categories.module').then(m => m.CategoriesPageModule)
+      },
+      {
+        path: 'orders',
+        loadChildren: () => import('./admin/orders/orders.module').then(m => m.OrdersPageModule)
+      },
+      {
+        path: 'users',
+        loadChildren: () => import('./admin/users/users.module').then(m => m.UsersPageModule)
+      }
+    ]
   },
 ];
 @NgModule({
