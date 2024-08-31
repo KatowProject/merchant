@@ -1,13 +1,66 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>order</ion-title>
+    <ion-title>Order</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">order</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-row *ngIf="data.length > 0; else noData">
+    <ion-col *ngFor="let item of data" size="12">
+      <ion-list style="border-radius: 5px;">
+        <!-- thumbnail, title and status order -->
+        <ion-row>
+          <ion-col size="12" style="padding-left: 10px; padding-right: 10px;">
+            <ion-item (click)="orderDetail(item)">
+              <ion-thumbnail slot="start">
+                <img alt="Silhouette of mountains" src="{{ item.products[0].image }}"
+                  style="border-radius: 5px;" />
+              </ion-thumbnail>
+              <ion-label>
+                <h1 class="font-bold">{{ item.products[0].name }}</h1>
+                <!-- total product secondary color-->
+                <small color="dark">+{{ item.products.length - 1 }} produk lainnya</small>
+              </ion-label>
+              <br>
+              <ion-badge slot="end" [color]="item.status === 'arrived' ? 'success' : 'warning'">
+                {{ item.status }}
+              </ion-badge>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12" style="padding-left: 10px;">
+            <ion-item>
+              <ion-label>
+                <h5 class="font-bold">Total</h5>
+                <small color="dark">
+                  {{ parseTotalAmount(item.total_amount) | currency: 'Rp': 'symbol' }}
+                </small>
+              </ion-label>
+
+              <!-- button order detail -->
+              <ion-button slot="end" color="primary" size="small" (click)="orderDetail(item)">
+                <ion-icon name="eye-outline"></ion-icon>
+                &nbsp;Detail
+              </ion-button>
+
+              <!-- konfirmasi pesanan -->
+              <ion-button slot="end" color="success" size="small" *ngIf="item.status === 'arrived'"
+                (click)="confirmOrder(item)">
+                <ion-icon name="checkmark-outline"></ion-icon>&nbsp;Selesai
+              </ion-button>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+  <ng-template #noData>
+    <ion-row>
+      <ion-col size="12" style="text-align: center; padding: 20px;">
+        <ion-text color="medium">
+          <h2>No orders available</h2>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ng-template>
 </ion-content>

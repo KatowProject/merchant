@@ -79,6 +79,12 @@ Route::middleware('jwt.user')->group(function () {
     Route::post('products/{product}/add-to-cart', [MainController::class, 'addToCart']);
 
     Route::get('cart', [MainController::class, 'getCart']);
+    Route::put('cart/{product}', [MainController::class, 'updateCart']);
+    Route::delete('cart/{product}', [MainController::class, 'deleteCart']);
+
+    Route::get('orders', [MainController::class, 'getOrders']);
+    Route::post('orders', [MainController::class, 'createOrder']);
+
 
     Route::get('categories', [CategoryController::class, 'index']);
     Route::get('categories/{category}', [CategoryController::class, 'show']);
@@ -87,11 +93,11 @@ Route::middleware('jwt.user')->group(function () {
     Route::get('sub-categories/{subCategory}', [SubCategoryController::class, 'show']);
     
     // Pesanan pengguna
-    Route::get('orders', [OrderController::class, 'index']);
-    Route::post('orders', [OrderController::class, 'store']);
-    Route::get('orders/{order}', [OrderController::class, 'show']);
-    Route::put('orders/{order}', [OrderController::class, 'update']);
-    Route::delete('orders/{order}', [OrderController::class, 'destroy']);
+    // Route::get('orders', [OrderController::class, 'index']);
+    // Route::post('orders', [OrderController::class, 'store']);
+    // Route::get('orders/{order}', [OrderController::class, 'show']);
+    // Route::put('orders/{order}', [OrderController::class, 'update']);
+    // Route::delete('orders/{order}', [OrderController::class, 'destroy']);
 });
 
 // Rute publik tambahan (jika diperlukan)

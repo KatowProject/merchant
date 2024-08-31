@@ -12,6 +12,8 @@ import { DetailProductComponent } from '../modal/detail-product/detail-product.c
 
 export class BerandaPage implements OnInit {
   discovery: any;
+  isSearchBarOpened: boolean = false;
+  dataFiltered: any;
 
   constructor(
     private loadingController: LoadingController,
@@ -47,6 +49,8 @@ export class BerandaPage implements OnInit {
     const data = await res.json();
 
     this.discovery = data;
+
+    this.dataFiltered = this.discovery.products;
 
     loading.dismiss();
   }
@@ -88,5 +92,18 @@ export class BerandaPage implements OnInit {
     });
 
     toast.present();
+  }
+
+  async filterProducts(event: any) {
+    const searchTerm = event.target.value;
+
+    if (searchTerm === '') {
+      this.dataFiltered = this.discovery.products;
+      return;
+    }
+
+    this.dataFiltered = this.discovery.products.filter((product: any) => {
+      return product.name.toLowerCase().includes(searchTerm.toLowerCase());
+    });
   }
 }

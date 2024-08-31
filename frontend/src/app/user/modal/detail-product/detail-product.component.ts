@@ -17,7 +17,7 @@ export class DetailProductComponent implements OnInit {
     private toastController: ToastController,
   ) { }
 
-  ngOnInit() {
+  ngOnInit() {  
     console.log(this.item);
   }
 
@@ -26,7 +26,7 @@ export class DetailProductComponent implements OnInit {
   }
 
   async addToCart(item: any) {
-    await this.mainService.addToCart(item);
+    await this.mainService.addToCart(item.id);
 
     this.toastController.create({
       message: 'Added to cart',

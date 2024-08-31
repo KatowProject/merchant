@@ -5,66 +5,117 @@
             <div class="logo-text">
                 <span class="logo-name">Groceria</span>
             </div>
+
+            <small class="ion-text-center">Hi,.. What are you looking for today?</small>
         </ion-title>
-        <div class="welcome-message">
-            <ion-title>Hi,.. <br />What are you looking for today?</ion-title>
-        </div>
-        <ion-searchbar class="custom-searchbar" placeholder="Cari produk"></ion-searchbar>
+        <ion-searchbar 
+            class="custom-searchbar" 
+            placeholder="Cari produk" 
+            (ionFocus)="isSearchBarOpened = true" 
+            (ionBlur)="isSearchBarOpened = false"
+            (ionInput)="filterProducts($event)"    
+        ></ion-searchbar>
     </ion-toolbar>
 </ion-header>
 
 <ion-content class="scroll-content">
-    <ion-list-header>
-        <ion-label>Categories</ion-label>
-        <ion-button fill="clear" slot="end">Tampilkan semua</ion-button>
-    </ion-list-header>
+    <div *ngIf="!isSearchBarOpened">
+        <ion-list-header>
+            <ion-label>Categories</ion-label>
+            <ion-button fill="clear" slot="end">Tampilkan semua</ion-button>
+        </ion-list-header>
 
-    <div class="card-container">
-        <ion-card (click)="getCategoryDetail(category.id)" *ngFor="let category of discovery?.categories">
-            <ion-card-header>
-                <ion-img src="https://picsum.photos/200/300" [alt]="category.name"></ion-img>
-                <ion-card-title class="custom-card-title">{{ category.name }}</ion-card-title>
-            </ion-card-header>
-        </ion-card>
+        <div class="card-container">
+            <ion-card (click)="getCategoryDetail(category.id)" *ngFor="let category of discovery?.categories">
+                <ion-card-header>
+                    <ion-img src="https://picsum.photos/200/300" [alt]="category.name"></ion-img>
+                    <ion-card-title class="custom-card-title">{{ category.name }}</ion-card-title>
+                </ion-card-header>
+            </ion-card>
 
-        <!-- <ion-card (click)="this">
-            <ion-card-header>
-                <ion-img src="assets/img/Snack/Chips.png" alt="Mi Goreng Rendang"></ion-img>
-                <ion-card-title class="custom-card-title">Snack</ion-card-title>
-            </ion-card-header>
-        </ion-card>
+            <!-- <ion-card (click)="this">
+                <ion-card-header>
+                    <ion-img src="assets/img/Snack/Chips.png" alt="Mi Goreng Rendang"></ion-img>
+                    <ion-card-title class="custom-card-title">Snack</ion-card-title>
+                </ion-card-header>
+            </ion-card>
 
-        <ion-card (click)="this">
-            <ion-card-header>
-                <ion-img src="assets/img/Drink/Drink.png" alt="Mi Goreng Rendang"></ion-img>
-                <ion-card-title class="custom-card-title">Drink</ion-card-title>
-            </ion-card-header>
-        </ion-card>
+            <ion-card (click)="this">
+                <ion-card-header>
+                    <ion-img src="assets/img/Drink/Drink.png" alt="Mi Goreng Rendang"></ion-img>
+                    <ion-card-title class="custom-card-title">Drink</ion-card-title>
+                </ion-card-header>
+            </ion-card>
 
-        <ion-card (click)="this">
-            <ion-card-header>
-                <ion-img src="assets/img/Essential Groceries/Essential Groceries.png" alt="Mi Goreng Rendang"></ion-img>
-                <ion-card-title class="custom-card-title">Essential Groceries</ion-card-title>
-            </ion-card-header>
-        </ion-card> -->
+            <ion-card (click)="this">
+                <ion-card-header>
+                    <ion-img src="assets/img/Essential Groceries/Essential Groceries.png" alt="Mi Goreng Rendang"></ion-img>
+                    <ion-card-title class="custom-card-title">Essential Groceries</ion-card-title>
+                </ion-card-header>
+            </ion-card> -->
+        </div>
+
+        <!-- Best Selling Section -->
+        <ion-list>
+            <ion-list-header>
+                <ion-label>Best Seller</ion-label>
+            </ion-list-header>
+            <div class="horizontal-scroll">
+                <div class="best-seller-container" *ngFor="let product of discovery?.best_seller">
+                    <ion-card>
+                        <img [src]="product.image" [alt]="product.name" (click)="getProductDetail(product)" />
+                        <ion-card-content>
+                            <ion-card-title class="custom-card-title">{{ product.name }}</ion-card-title>
+                            <p class="small-text ion-text-center">Rp {{ product.price }}</p>
+                            <ion-button class="button-container" expand="block" size="default" (click)="addToCart(product.id)">+ Cart</ion-button>
+                        </ion-card-content>
+                    </ion-card>
+                </div>
+            </div>
+        </ion-list>
+
+
+        <!-- List Product 25 Vertical Scroll -->
+        <ion-list>
+            <ion-list-header>
+                <ion-label>Product</ion-label>
+            </ion-list-header>
+            <div class="vertical-scroll">
+                <ion-row>
+                    <ion-col size="6" *ngFor="let product of discovery?.products">
+                        <ion-card>
+                            <img [src]="product.image" [alt]="product.name" (click)="getProductDetail(product)" />
+                            <ion-card-content>
+                                <ion-card-title class="custom-card-title">{{ product.name }}</ion-card-title>
+                                <p class="small-text ion-text-center">Rp {{ product.price }}</p>
+                                <ion-button class="button-container" expand="block" size="default" (click)="addToCart(product.id)">+ Cart</ion-button>
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </ion-list>
     </div>
 
-    <!-- Best Selling Section -->
-    <ion-list>
-        <ion-list-header>
-            <ion-label>Best Seller</ion-label>
-        </ion-list-header>
-        <div class="horizontal-scroll">
-            <div class="best-seller-container" *ngFor="let product of discovery?.best_seller">
-                <ion-card (click)="getProductDetail(product)">
-                    <img [src]="product.image" [alt]="product.name" />
-                    <ion-card-content>
-                        <ion-card-title class="custom-card-title">{{ product.name }}</ion-card-title>
-                        <p class="small-text ion-text-center">Rp {{ product.price }}</p>
-                        <ion-button class="button-container" expand="block" size="default" (click)="addToCart(product.id)">+ Cart</ion-button>
-                    </ion-card-content>
-                </ion-card>
+    <div *ngIf="isSearchBarOpened">
+        <ion-list>
+            <ion-list-header>
+                <ion-label>Search Result</ion-label>
+            </ion-list-header>
+            <div class="vertical-scroll">
+                <ion-row>
+                    <ion-col size="6" *ngFor="let product of dataFiltered">
+                        <ion-card>
+                            <img src="{{ product.image }}" [alt]="product.name" (click)="getProductDetail(product)" />
+                            <ion-card-content>
+                                <ion-card-title class="custom-card-title">{{ product.name }}</ion-card-title>
+                                <p class="small-text ion-text-center">Rp {{ product.price }}</p>
+                                <ion-button class="button-container" expand="block" size="default" (click)="addToCart(product.id)">+ Cart</ion-button>
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
             </div>
-        </div>
-    </ion-list>
+        </ion-list>
+    </div>
 </ion-content>

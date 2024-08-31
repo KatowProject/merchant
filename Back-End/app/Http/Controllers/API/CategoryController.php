@@ -18,6 +18,10 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         $category->load('products');
+
+        $category->products->load('category');
+        $category->products->load('subCategory');
+        
         return response()->json($category);
     }
 

@@ -124,4 +124,52 @@ export class MainService {
 
     return response;
   }
+
+  async updateCart(productId: number, quantity: number): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/cart/${productId}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ quantity })
+    });
+
+    return response;
+  }
+
+  async removeCart(productId: number): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/cart/${productId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    return response;
+  }
+
+  async placeOrder(data: any): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/orders`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    return response;
+  }
+
+  async getOrders(): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/orders`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    return response;
+  }
 }

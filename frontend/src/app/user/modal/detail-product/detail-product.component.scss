@@ -4,3 +4,9 @@
     bottom: 10px;
     right: 0;
 }
+ion-header {
+    ion-toolbar {
+        --background: #0000ff;
+        --color: #ffffff;
+    }
+}
