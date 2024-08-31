@@ -20,7 +20,7 @@
     </ion-list-header>
 
     <div class="card-container">
-        <ion-card (click)="this" *ngFor="let category of categories">
+        <ion-card (click)="getCategoryDetail(category.id)" *ngFor="let category of discovery?.categories">
             <ion-card-header>
                 <ion-img src="https://picsum.photos/200/300" [alt]="category.name"></ion-img>
                 <ion-card-title class="custom-card-title">{{ category.name }}</ion-card-title>
@@ -55,13 +55,13 @@
             <ion-label>Best Seller</ion-label>
         </ion-list-header>
         <div class="horizontal-scroll">
-            <div class="best-seller-container" *ngFor="let product of products">
-                <ion-card>
-                    <img src="assets/img/Mie/indomie/Mi Goreng Rendang.png" alt="Mi Goreng Rendang" />
+            <div class="best-seller-container" *ngFor="let product of discovery?.best_seller">
+                <ion-card (click)="getProductDetail(product)">
+                    <img [src]="product.image" [alt]="product.name" />
                     <ion-card-content>
-                        <ion-card-title class="custom-card-titlee">Mi Goreng Rendang</ion-card-title>
-                        <p class="small-text">harga: rp xxx.xxx</p>
-                        <ion-button class="button-container" size="default">+ Card</ion-button>
+                        <ion-card-title class="custom-card-title">{{ product.name }}</ion-card-title>
+                        <p class="small-text ion-text-center">Rp {{ product.price }}</p>
+                        <ion-button class="button-container" expand="block" size="default" (click)="addToCart(product.id)">+ Cart</ion-button>
                     </ion-card-content>
                 </ion-card>
             </div>

@@ -26,10 +26,11 @@ class UserAuth
             $user = User::find($decoded->user_id);
             $user->role = $decoded->role;
 
-            if ($decoded->role == "user") {
+            if ($decoded->role == "user" || $decoded->role == "admin") {    
                 $request->request->add([
                     'userauth' => $user
                 ]);
+
                 return $next($request);
             } else {
                 return response()->json([

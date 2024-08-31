@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 
 import { MainService } from 'src/app/services/main.service';
+import { DetailProductComponent } from '../modal/detail-product/detail-product.component';
 @Component({
   selector: 'app-beranda',
   templateUrl: './beranda.page.html',
@@ -9,12 +11,15 @@ import { MainService } from 'src/app/services/main.service';
 })
 
 export class BerandaPage implements OnInit {
-  products: any;
-  categories: any;
+  discovery: any;
 
   constructor(
     private loadingController: LoadingController,
-    private mainService: MainService) { }
+    private mainService: MainService,
+    private toastController: ToastController,
+    private modalController: ModalController,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.getData();
@@ -27,20 +32,61 @@ export class BerandaPage implements OnInit {
 
     loading.present();
 
-    const res = [
-      this.mainService.getProducts(),
-      this.mainService.getCategories()
-    ];
+    const res = await this.mainService.getDiscovery();
+    if (res.status !== 200) {
+      const toast = await this.toastController.create({
+        message: 'Failed to fetch data',
+        duration: 2000
+      });
 
-    const [products, categories] = await Promise.all(res);
+      toast.present();
 
-    const productsJson = await products.json();
-    const categoriesJson = await categories.json();
+      return;
+    }
 
-    this.products = productsJson;
-    this.categories = categoriesJson;
+    const data = await res.json();
+
+    this.discovery = data;
 
     loading.dismiss();
   }
 
+  async getCategoryDetail(id: string) {
+    this.router.navigate(['/tabs/category', id]);
+  }
+
+  async getProductDetail(product: object) {
+    this.modalController.create({
+      component: DetailProductComponent,
+      componentProps: {
+        'item': product
+      }
+    }).then(modal => {
+      modal.present();
+    });
+  }
+
+  async addToCart(id: number) {
+    const res = await this.mainService.addToCart(id);
+
+    if (res.status !== 200) {
+      const toast = await this.toastController.create({
+        message: 'Failed to add to cart',
+        duration: 2000,
+        color: 'danger'
+      });
+
+      toast.present();
+
+      return;
+    }
+
+    const toast = await this.toastController.create({
+      message: 'Added to cart',
+      duration: 2000,
+      color: 'success'
+    });
+
+    toast.present();
+  }
 }

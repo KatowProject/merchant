@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid *ngIf="profile">
+    <ion-row>
+      <ion-col size="12">
+        <ion-card>
+          <ion-card-content>
+            <ion-row class="ion-padding">
+              <ion-col size="12" class="ion-text-center">
+                <img src="https://ui-avatars.com/api/?name={{ profile.name }}background=random&size=128" class="profile-image">
+              </ion-col>
+
+              <ion-col size="12" class="ion-text-center">
+                <!-- readonly input -->
+                <ion-item class="centered-label">
+                  <ion-label position="stacked">Nama</ion-label>
+                  <ion-input type="text" [(ngModel)]="profile.name" required></ion-input>
+                </ion-item>
+        
+                <ion-item class="centered-label">
+                  <ion-label position="stacked">Email</ion-label>
+                  <ion-input type="email" [(ngModel)]="profile.email" required></ion-input>
+                </ion-item>
+        
+                <ion-item class="centered-label">
+                  <ion-label position="stacked">Password</ion-label>
+                  <ion-input type="password" [(ngModel)]="profile.password" required></ion-input>
+                </ion-item>
+              </ion-col>
+              
+              <ion-col size="12" class="ion-padding">
+                <ion-button expand="block" color="primary" (click)="updateProfile()">
+                  <ion-icon name="save-outline"></ion-icon>&nbsp;
+                  Save
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12" class="ion-padding">
+        <ion-button expand="block" color="danger" (click)="logout()">
+          <ion-icon name="log-out-outline"></ion-icon>&nbsp;
+          Logout
+        </ion-button>
+      </ion-col>  
+    </ion-row>
+  </ion-grid>
+</ion-content>

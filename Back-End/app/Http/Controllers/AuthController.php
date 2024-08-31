@@ -64,15 +64,4 @@ class AuthController extends Controller
             'expires_in' => (60 * 60 * 24 * 30),
         ]);
     }
-
-    public function me()
-    {
-        $token = request()->get('token');
-
-        $payload = JWT::decode($token, new Key(env('JWT_SECRET'), 'HS256'));
-
-        $user = User::find($payload->user_id);
-
-        return response()->json($user);
-    }
 }

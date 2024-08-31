@@ -7,6 +7,17 @@ export class MainService {
 
   constructor() { }
 
+  async getDiscovery(): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/discovery`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    return response;
+  }
+
   async getProducts(): Promise<Response> {
     const response = await fetch(`${environment.baseUrl}/products`, {
       method: 'GET',
@@ -42,6 +53,69 @@ export class MainService {
 
   async getCategory(id: number): Promise<Response> {
     const response = await fetch(`${environment.baseUrl}/categories/${id}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    return response;
+  }
+
+  async getProductByCategory(id: number): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/categories/${id}/products`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    return response;
+  }
+
+  async addToCart(productId: number): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/products/${productId}/add-to-cart`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    return response;
+  }
+
+  /**
+   * Profile
+   */
+  async me(): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/me`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    return response;
+  }
+
+  async updateProfile(profile: any): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/me`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(profile)
+    });
+
+    return response;
+  }
+
+  /**
+   * Transaction
+   */
+  async getCart(): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/cart`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`

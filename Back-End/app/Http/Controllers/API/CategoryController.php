@@ -14,6 +14,13 @@ class CategoryController extends Controller
         return Category::with('subCategories')->get();
     }
 
+    public function products($id)
+    {
+        $category = Category::find($id);
+        $category->load('products');
+        return response()->json($category);
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([

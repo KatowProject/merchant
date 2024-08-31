@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Produk Kategori {{ category?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- <ion-list>
+    <div class="vertical-scroll">
+      <div class="best-seller-container" *ngFor="let product of products">
+        <ion-card>
+          <img src="assets/img/Mie/indomie/Mi Goreng Rendang.png" alt="Mi Goreng Rendang" />
+          <ion-card-content>
+            <ion-card-title class="custom-card-titlee">Mi Goreng Rendang</ion-card-title>
+            <p class="small-text">harga: rp xxx.xxx</p>
+            <ion-button class="button-container" size="default">+ Card</ion-button>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+  </ion-list> -->
+
+  <ion-row>
+    <ion-col size="12">
+      <ion-searchbar 
+      class="custom-searchbar" 
+      placeholder="Cari produk"
+      (ionInput)="filterProducts($event)"
+      ></ion-searchbar>
+    </ion-col>
+
+    <ion-col size="6" *ngFor="let product of filteredProducts">
+      <ion-card>
+        <img [src]="product.image" alt="Mi Goreng Rendang" />
+        <ion-card-content>
+          <ion-card-title class="custom-card-title">{{ product.name }}</ion-card-title>
+          <p class="small-text">Rp {{ product.price }}</p>
+          <ion-button class="button-container" expand="block" size="default">+ Cart</ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+
+</ion-content>

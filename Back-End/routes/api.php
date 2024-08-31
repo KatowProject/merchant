@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminBlogPostController;
 use App\Http\Controllers\AdminFaqController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MainController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,13 +68,21 @@ Route::middleware(['jwt.auth', 'role:admin'])->group(function () {
 
 // Rute yang memerlukan autentikasi pengguna menggunakan JWT
 Route::middleware('jwt.user')->group(function () {
-    Route::get('me', [AuthController::class, 'me']);
+    Route::get('me', [MainController::class, 'me']);
+    Route::put('me', [MainController::class, 'updateProfile']);
+
+    Route::get('discovery', [MainController::class, 'getDiscovery']);
 
     // Produk, kategori, dan sub-kategori (read-only untuk pengguna)
     Route::get('products', [ProductController::class, 'index']);
     Route::get('products/{product}', [ProductController::class, 'show']);
+    Route::post('products/{product}/add-to-cart', [MainController::class, 'addToCart']);
+
+    Route::get('cart', [MainController::class, 'getCart']);
+
     Route::get('categories', [CategoryController::class, 'index']);
     Route::get('categories/{category}', [CategoryController::class, 'show']);
+    Route::get('categories/{category}/products', [CategoryController::class, 'products']);
     Route::get('sub-categories', [SubCategoryController::class, 'index']);
     Route::get('sub-categories/{subCategory}', [SubCategoryController::class, 'show']);
     
