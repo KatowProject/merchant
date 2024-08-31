@@ -3,8 +3,14 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { MainTabsComponent } from './user/main-tabs/main-tabs.component';
 import { authGuardGuard } from './guard/auth-guard.guard';
 import { MenuComponent } from './admin/menu/menu.component';
+import { unauthGuard } from './guard/unauth.guard';
 
 const routes: Routes = [
+  {
+    path: 'login',
+    canMatch: [unauthGuard],
+    loadChildren: () => import('./auth/login/login.module').then(m => m.LoginPageModule)
+  },
   {
     path: '',
     redirectTo: 'tabs',

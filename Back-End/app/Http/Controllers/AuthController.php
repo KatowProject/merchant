@@ -53,13 +53,14 @@ class AuthController extends Controller
             'iat' => time(),
             'exp' => time() + (60 * 60 * 24 * 30),
             'user_id' => $user->id,
-            'role' => 'user',
+            'role' => $user->role,
         ];
 
         $token = JWT::encode($payload, env('JWT_SECRET'), 'HS256');
 
         return response()->json([
             'token' => $token,
+            'role' => $user->role,
             'message' => 'User successfully logged in',
             'expires_in' => (60 * 60 * 24 * 30),
         ]);

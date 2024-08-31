@@ -23,7 +23,8 @@ class AdminController extends Controller
 
         // ambil 5 transaksi terakhir
         $transaksi_terakhir = Order::with('user')->orderBy('created_at', 'desc')->limit(5)->get();
-
+        $transaksi_terakhir->load('products');
+        
         return response()->json([
             'total_produk' => $total_produk,
             'pesanan_masuk' => $pesanan_masuk,

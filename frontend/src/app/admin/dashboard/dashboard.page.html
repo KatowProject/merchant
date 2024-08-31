@@ -17,7 +17,7 @@
             <ion-card-title>Total Produk</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <h2>150</h2>
+            <h2>{{ data.total_produk }}</h2>
             <p>Jumlah produk yang tersedia di toko</p>
           </ion-card-content>
         </ion-card>
@@ -29,7 +29,7 @@
             <ion-card-title>Pesanan Baru</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <h2>25</h2>
+            <h2>{{ data.pesanan_masuk | number }}</h2>
             <p>Pesanan yang belum diproses</p>
           </ion-card-content>
         </ion-card>
@@ -41,7 +41,7 @@
             <ion-card-title>Total Pengguna</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <h2>1,200</h2>
+            <h2>{{ data.total_pengguna | number }}</h2>
             <p>Pengguna terdaftar di aplikasi</p>
           </ion-card-content>
         </ion-card>
@@ -53,7 +53,8 @@
             <ion-card-title>Penghasilan Bulanan</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <h2>Rp 10,000,000</h2>
+            <!-- <h2>Rp 10,000,000</h2> -->
+            <h2>{{ toLocalePemasukan(data.pemasukan_month) }}</h2>
             <p>Penghasilan untuk bulan ini</p>
           </ion-card-content>
         </ion-card>
@@ -61,19 +62,18 @@
     </ion-row>
 
     <!-- Row kedua untuk menampilkan grafik penjualan -->
-    <ion-row>
+    <!-- <ion-row>
       <ion-col size="12">
         <ion-card>
           <ion-card-header>
             <ion-card-title>Grafik Penjualan Bulanan</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <!-- Tempatkan grafik di sini, bisa menggunakan chart library seperti Chart.js -->
             <canvas id="salesChart"></canvas>
           </ion-card-content>
         </ion-card>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
 
     <!-- Row ketiga untuk menampilkan aktivitas terbaru -->
     <ion-row>
@@ -84,16 +84,16 @@
           </ion-card-header>
           <ion-card-content>
             <!-- Contoh tabel aktivitas terbaru -->
-            <ion-list>
+            <ion-list *ngFor="let order of data.transaksi_terakhir">
               <ion-item>
                 <ion-label>
-                  <h2>Pesanan #1023</h2>
-                  <p>Produk: Laptop</p>
-                  <p>Status: Dalam Proses</p>
+                  <h2>Pesanan #{{ order.id }}</h2>
+                  <p>Jumlah Produk: {{ order.products.length}}</p>
+                  <p>Status: {{ order.status }}</p>
                 </ion-label>
-                <ion-note slot="end" color="primary">5 Menit Lalu</ion-note>
+                <ion-note slot="end" color="primary">{{ sinceTime(order.created_at)}}</ion-note>
               </ion-item>
-              <ion-item>
+              <!-- <ion-item>
                 <ion-label>
                   <h2>Pengguna Baru</h2>
                   <p>Nama: John Doe</p>
@@ -108,7 +108,7 @@
                   <p>Status: Selesai</p>
                 </ion-label>
                 <ion-note slot="end" color="primary">30 Menit Lalu</ion-note>
-              </ion-item>
+              </ion-item> -->
             </ion-list>
           </ion-card-content>
         </ion-card>
@@ -124,16 +124,16 @@
           </ion-card-header>
           <ion-card-content>
             <!-- Contoh tabel pesanan terbaru -->
-            <ion-list>
+            <ion-list *ngFor="let order of data.transaksi_terakhir">
               <ion-item>
                 <ion-label>
-                  <h2>Pesanan #1023</h2>
-                  <p>Produk: Laptop</p>
-                  <p>Status: Dalam Proses</p>
+                  <h2>Pesanan #{{order.id}}</h2>
+                  <p>Jumlah Produk: {{order.products.length}}</p>
+                  <p>Status: {{order.status}} </p>
                 </ion-label>
                 <ion-button fill="outline" slot="end">Detail</ion-button>
               </ion-item>
-              <ion-item>
+              <!-- <ion-item>
                 <ion-label>
                   <h2>Pesanan #1022</h2>
                   <p>Produk: Smartphone</p>
@@ -148,7 +148,7 @@
                   <p>Status: Dikirim</p>
                 </ion-label>
                 <ion-button fill="outline" slot="end">Detail</ion-button>
-              </ion-item>
+              </ion-item> -->
             </ion-list>
           </ion-card-content>
         </ion-card>
