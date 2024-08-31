@@ -100,6 +100,9 @@ Route::middleware('jwt.user')->group(function () {
 Route::middleware('jwt.admin')->prefix('admin')->group(function () {
     Route::get('dashboard', [AdminController::class, 'dashboard']);
 
+    Route::get('products', [AdminController::class, 'getProducts']);
+
+    Route::get('categories', [AdminController::class, 'getCategories']);
 
     Route::get('me', [MainController::class, 'me']);
     Route::put('me', [MainController::class, 'updateProfile']);

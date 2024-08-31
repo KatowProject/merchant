@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, ToastController, ViewWillEnter } from '@ionic/angular';
+import { LoadingController, ModalController, ToastController, ViewWillEnter } from '@ionic/angular';
 import { AdminService } from 'src/app/services/admin.service';
+import { OrderDetailModalComponent } from '../modal/order-detail-modal/order-detail-modal.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +14,8 @@ export class DashboardPage implements OnInit, ViewWillEnter {
   constructor(
     private adminService: AdminService,
     private loadingController: LoadingController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -49,6 +51,17 @@ export class DashboardPage implements OnInit, ViewWillEnter {
     await loading.dismiss();
 
     this.data = data;
+  }
+
+  async modalDetailOrder(item: any) {
+    const modal = await this.modalController.create({
+      component: OrderDetailModalComponent,
+      componentProps: {
+        item
+      }
+    });
+
+    await modal.present();
   }
 
 

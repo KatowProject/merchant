@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
@@ -32,6 +33,20 @@ class AdminController extends Controller
             'pemasukan_month' => $pemasukan_month,
             'transaksi_terakhir' => $transaksi_terakhir
         ]);
+    }
+
+    public function getProducts()
+    {
+        $products = Product::with('category', 'subCategory')->get();
+
+        return response()->json($products);
+    }
+
+    public function getCategories()
+    {
+        $categories = Category::all();
+
+        return response()->json($categories);
     }
 
     /**

@@ -9,7 +9,6 @@
 
 <ion-content [fullscreen]="true">
   <ion-grid>
-    <!-- Row pertama untuk menampilkan statistik penting -->
     <ion-row>
       <ion-col size="6" size-md="3">
         <ion-card>
@@ -131,24 +130,8 @@
                   <p>Jumlah Produk: {{order.products.length}}</p>
                   <p>Status: {{order.status}} </p>
                 </ion-label>
-                <ion-button fill="outline" slot="end">Detail</ion-button>
+                <ion-button fill="outline" slot="end" (click)="modalDetailOrder(order)">Detail</ion-button>
               </ion-item>
-              <!-- <ion-item>
-                <ion-label>
-                  <h2>Pesanan #1022</h2>
-                  <p>Produk: Smartphone</p>
-                  <p>Status: Selesai</p>
-                </ion-label>
-                <ion-button fill="outline" slot="end">Detail</ion-button>
-              </ion-item>
-              <ion-item>
-                <ion-label>
-                  <h2>Pesanan #1021</h2>
-                  <p>Produk: Tablet</p>
-                  <p>Status: Dikirim</p>
-                </ion-label>
-                <ion-button fill="outline" slot="end">Detail</ion-button>
-              </ion-item> -->
             </ion-list>
           </ion-card-content>
         </ion-card>
