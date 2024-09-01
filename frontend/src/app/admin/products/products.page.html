@@ -18,7 +18,7 @@
     <ion-row>
       <ion-col *ngFor="let item of data" size="6">
         <ion-card>
-          <img alt="{{ item.name }}" src="{{ item.image }}" class="r-img" />
+          <img alt="{{ item.name }}" src="{{ handleImage(item.image) }}" class="r-img" />
           <ion-card-header>
             <h4 class="ion-text-center font-bold ion-text-wrap" color="secondary">
               {{ item.name }}

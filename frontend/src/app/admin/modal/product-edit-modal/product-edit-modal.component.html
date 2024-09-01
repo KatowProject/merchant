@@ -1,3 +1,69 @@
-<p>
-  product-edit-modal works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="cancel()" default-href="!"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Add Product</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Product Information</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form #orderForm="ngForm">
+        <ion-item>
+          <ion-input label="Product Name" labelPlacement="floating" placeholder="Product Name"
+            [(ngModel)]="form.name" name="name" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input label="Price" labelPlacement="floating" placeholder="Price" [(ngModel)]="form.price" name="price" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input label="Stock" labelPlacement="floating" placeholder="Stock" [(ngModel)]="form.stock" name="stock" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input label="Description" labelPlacement="floating" placeholder="Description" name="description"
+            [(ngModel)]="form.description" required></ion-input>
+        </ion-item>
+        <!-- image -->
+
+        <ion-item>
+          <h5>Image</h5>
+          <ion-card>
+            <ion-card-content>
+              <!-- show image -->
+              <img alt="form.name" id="image" src="{{ form.image }}" *ngIf="form.image" required>
+
+              <ion-item>
+                <ion-icon lazy="true" slot="start" name="image"></ion-icon>
+                <input type="file" id="file-input" accept="image/png, image/jpeg" name="image" (change)="loadImage($event)" required>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+
+        <ion-item>
+          <ion-select label="Category" label-placement="floating" placeholder="Select One" [(ngModel)]="form.category_id" name="category_id">
+            <ion-select-option *ngFor="let c of categories" [value]="c.id">{{ c.name }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-select label="Sub Category" label-placement="floating" placeholder="Select One" [(ngModel)]="form.sub_category_id" name="sub_category_id" [value]="form.sub_category_id">
+            <ion-select-option *ngFor="let c of subCategories" [value]="c.id">{{ c.name }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-button expand="block" (click)="save()" [disabled]="!orderForm.valid">Save</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

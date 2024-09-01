@@ -26,6 +26,11 @@ class MainController extends Controller
     public function me(Request $request)
     {
         $token = $request->bearerToken();
+        if (!$token) {
+            return response()->json([
+                'message' => 'Token not found'
+            ], 401);
+        }
 
         $payload = JWT::decode($token, new Key(env('JWT_SECRET'), 'HS256'));
 
@@ -37,6 +42,11 @@ class MainController extends Controller
     public function updateProfile(Request $request)
     {
         $user = $request->userauth;
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404);
+        }
 
         $user->update($request->all());
 

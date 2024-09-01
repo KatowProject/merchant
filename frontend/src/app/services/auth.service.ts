@@ -19,4 +19,16 @@ export class AuthService {
 
     return response;
   }
+
+  async me(): Promise<Response> {
+    const token = localStorage.getItem('token');
+
+    const response = await fetch(`${environment.baseUrl}/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    return response;
+  }
 }

@@ -29,7 +29,7 @@ Route::post('/login', [AuthController::class, 'login']);
 // Rute yang memerlukan autentikasi admin menggunakan JWT
 // Route::middleware('jwt.admin')->group(function () {
 //     Route::get('/admin/me', [AdminController::class, 'me']);
-    
+
 //     // CRUD untuk produk, kategori, dan sub-kategori
 //     Route::apiResource('products', ProductController::class);
 //     Route::apiResource('categories', CategoryController::class);
@@ -61,10 +61,11 @@ Route::post('/login', [AuthController::class, 'login']);
 //     Route::put('admin/settings', [AdminController::class, 'updateSettings']);
 // });
 
+Route::get('me', [MainController::class, 'me']);
+Route::put('me', [MainController::class, 'updateProfile']);
+
 // Rute yang memerlukan autentikasi pengguna menggunakan JWT
 Route::middleware('jwt.user')->group(function () {
-    Route::get('me', [MainController::class, 'me']);
-    Route::put('me', [MainController::class, 'updateProfile']);
 
     Route::get('discovery', [MainController::class, 'getDiscovery']);
 
@@ -101,9 +102,8 @@ Route::middleware('jwt.admin')->prefix('admin')->group(function () {
     Route::get('dashboard', [AdminController::class, 'dashboard']);
 
     Route::get('products', [AdminController::class, 'getProducts']);
+    Route::post('products', [AdminController::class, 'createProduct']);
 
     Route::get('categories', [AdminController::class, 'getCategories']);
-
-    Route::get('me', [MainController::class, 'me']);
-    Route::put('me', [MainController::class, 'updateProfile']);
+    Route::get('sub-categories', [AdminController::class, 'getSubCategories']);
 });

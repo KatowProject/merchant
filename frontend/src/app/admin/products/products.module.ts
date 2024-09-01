@@ -8,6 +8,7 @@ import { ProductsPageRoutingModule } from './products-routing.module';
 
 import { ProductsPage } from './products.page';
 import { ProductAddModalComponent } from '../modal/product-add-modal/product-add-modal.component';
+import { ProductEditModalComponent } from '../modal/product-edit-modal/product-edit-modal.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { ProductAddModalComponent } from '../modal/product-add-modal/product-add
     IonicModule,
     ProductsPageRoutingModule
   ],
-  declarations: [ProductsPage, ProductAddModalComponent]
+  declarations: [ProductsPage, ProductAddModalComponent, ProductEditModalComponent]
 })
 export class ProductsPageModule {}

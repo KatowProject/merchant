@@ -7,11 +7,8 @@ use App\Models\Category;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AdminController extends Controller
 {
@@ -48,221 +45,47 @@ class AdminController extends Controller
 
         return response()->json($categories);
     }
-
-    /**
-     * Register a new admin.
-     */
-    public function register(Request $request)
+    public function getSubCategories()
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:admins',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+        $sub_categories = SubCategory::all();
 
-        $admin = Admin::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        return response()->json(['message' => 'Admin registered successfully', 'admin' => $admin], 201);
+        return response()->json($sub_categories);
     }
 
-    /**
-     * Log in an admin.
-     */
-    public function login(Request $request)
+    public function createProduct(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $m_product = new Product();
 
-        if (!$token = Auth::guard('admin')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
-        return $this->respondWithToken($token);
-    }
-
-    /**
-     * Log out the admin.
-     */
-    public function logout()
-    {
-        Auth::guard('admin')->logout();
-
-        return response()->json(['message' => 'Successfully logged out']);
-    }
-
-    /**
-     * Get the authenticated admin.
-     */
-    public function me()
-    {
-        return response()->json(Auth::guard('admin')->user());
-    }
-
-    /**
-     * Refresh a token.
-     */
-    public function refresh()
-    {
         try {
-            $token = JWTAuth::parseToken()->refresh();
-            return $this->respondWithToken($token);
-        } catch (JWTException $e) {
-            return response()->json(['error' => 'Could not create token'], 500);
+            $request->validate([
+                'name' => 'required',
+                'description' => 'required',
+                'price' => 'required',
+                'stock' => 'required',
+                'category_id' => 'required|exists:categories,id',
+                'sub_category_id' => 'required|exists:sub_categories,id',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+
+            $m_product->name = $request->name;
+            $m_product->description = $request->description;
+            $m_product->price = $request->price;
+            $m_product->stock = $request->stock;
+            $m_product->category_id = $request->category_id;
+            $m_product->sub_category_id = $request->sub_category_id;
+
+            // upload gambar
+            $image = $request->file('image');
+            $image_name = time() . '.' . $image->extension();
+            $image->move(public_path('images'), $image_name);
+
+            $m_product->image = 'images/' . $image_name;
+
+            $m_product->save();
+
+            return response()->json(['message' => 'Product created successfully', 'product' => $m_product]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
         }
-    }
-
-    /**
-     * Update the admin's profile.
-     */
-    public function updateProfile(Request $request)
-    {
-        $admin = Auth::guard('admin')->user();
-
-        if (!$admin) {
-            return response()->json(['error' => 'Admin not found'], 404);
-        }
-
-        $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|string|email|max:255|unique:admins,email,'.$admin->id,
-            'password' => 'sometimes|required|string|min:8|confirmed',
-        ]);
-
-        $updateData = [];
-
-        if ($request->has('name')) {
-            $updateData['name'] = $request->name;
-        }
-
-        if ($request->has('email')) {
-            $updateData['email'] = $request->email;
-        }
-
-        if ($request->has('password')) {
-            $updateData['password'] = Hash::make($request->password);
-        }
-
-        if (Admin::where('id', $admin->id)->update($updateData)) {
-            $updatedAdmin = Admin::find($admin->id);
-            return response()->json(['message' => 'Profile updated successfully', 'admin' => $updatedAdmin]);
-        } else {
-            return response()->json(['error' => 'Failed to update profile'], 500);
-        }
-    }
-
-    /**
-     * Delete the admin's account.
-     */
-    public function deleteAccount()
-    {
-        $admin = Auth::guard('admin')->user();
-
-        if (!$admin) {
-            return response()->json(['error' => 'Admin not found'], 404);
-        }
-
-        Auth::guard('admin')->logout();
-
-        if (Admin::where('id', $admin->id)->delete()) {
-            return response()->json(['message' => 'Account deleted successfully']);
-        } else {
-            return response()->json(['error' => 'Failed to delete account'], 500);
-        }
-    }
-
-    /**
-     * Get a list of all users.
-     */
-    public function listUsers()
-    {
-        $users = User::all();
-        return response()->json(['users' => $users]);
-    }
-
-    /**
-     * Show a specific user.
-     */
-    public function showUser($id)
-    {
-        $user = User::findOrFail($id);
-        return response()->json(['user' => $user]);
-    }
-
-    /**
-     * Update a user's information.
-     */
-    public function updateUser(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-
-        $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|string|email|max:255|unique:users,email,'.$user->id,
-        ]);
-
-        $user->update($request->only(['name', 'email']));
-
-        return response()->json(['message' => 'User updated successfully', 'user' => $user]);
-    }
-
-    /**
-     * Delete a user.
-     */
-    public function deleteUser($id)
-    {
-        $user = User::findOrFail($id);
-        $user->delete();
-
-        return response()->json(['message' => 'User deleted successfully']);
-    }
-
-    /**
-     * Get a list of all orders.
-     */
-    public function listOrders()
-    {
-        $orders = Order::with('user')->get();
-        return response()->json(['orders' => $orders]);
-    }
-
-    /**
-     * Show a specific order.
-     */
-    public function showOrder($id)
-    {
-        $order = Order::with('user', 'products')->findOrFail($id);
-        return response()->json(['order' => $order]);
-    }
-
-    /**
-     * Update an order's status.
-     */
-    public function updateOrder(Request $request, $id)
-    {
-        $order = Order::findOrFail($id);
-
-        $request->validate([
-            'status' => 'required|string|in:pending,processing,completed,cancelled',
-        ]);
-
-        $order->update(['status' => $request->status]);
-
-        return response()->json(['message' => 'Order updated successfully', 'order' => $order]);
-    }
-
-    /**
-     * Get the token array structure.
-     */
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => config('jwt.ttl') * 60,
-            'admin' => Auth::guard('admin')->user()
-        ]);
     }
 }

@@ -4,6 +4,7 @@ import { MainTabsComponent } from './user/main-tabs/main-tabs.component';
 import { authGuardGuard } from './guard/auth-guard.guard';
 import { MenuComponent } from './admin/menu/menu.component';
 import { unauthGuard } from './guard/unauth.guard';
+import { gateGuard } from './guard/gate.guard';
 
 const routes: Routes = [
   {
@@ -13,8 +14,8 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'tabs',
-    pathMatch: 'full'
+    canActivate: [gateGuard],
+    loadComponent: () => import('./auth/login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: 'tabs',

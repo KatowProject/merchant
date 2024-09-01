@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { AdminService } from 'src/app/services/admin.service';
 import { ProductAddModalComponent } from '../modal/product-add-modal/product-add-modal.component';
+import { environment } from 'src/environments/environment';
+import { ProductEditModalComponent } from '../modal/product-edit-modal/product-edit-modal.component';
 
 @Component({
   selector: 'app-products',
@@ -49,17 +51,45 @@ export class ProductsPage implements OnInit {
     this.data = data;
   }
 
-  addProductModal() {
-    this.modalController.create({
+  async addProductModal() {
+    const modal = await this.modalController.create({
       component: ProductAddModalComponent
-    }).then(modal => modal.present());
+    });
+
+    modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (!data) return;
+
+    this.getData();
   }
 
-  editProductModal(item: any) {
-    console.log('Edit Product Modal');
+  async editProductModal(item: any) {
+    const modal = await this.modalController.create({
+      component: ProductEditModalComponent,
+      componentProps: {
+        item: item
+      }
+    });
+
+    modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (!data) return;
+
+    this.getData();
   }
 
   deleteProduct(id: number) {
     console.log('Delete Product', id);
+  }
+
+  //////
+  handleImage(image: string) {
+    if (image.startsWith('http')) {
+      return image;
+    } else {
+      return `${environment.imageUrl}/${image}`;
+    }
   }
 }
