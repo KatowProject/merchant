@@ -61,9 +61,9 @@ class MainController extends Controller
         $categories = $this->m_category->limit(5)->get();
 
         // get best seller products (base on table order_products, but data return as table products)
-        $best_seller = $this->m_product->select('products.*')
+        $best_seller = $this->m_product->select('products.id', 'products.name', 'products.price', 'products.category_id', 'products.sub_category_id') // Add necessary columns
         ->join('order_product', 'products.id', '=', 'order_product.product_id')
-        ->groupBy('products.id')
+            ->groupBy('products.id', 'products.name', 'products.price', 'products.category_id', 'products.sub_category_id') // Group by necessary columns
         ->orderByRaw('SUM(order_product.quantity) DESC')
         ->get();
 
