@@ -1,3 +1,46 @@
-<p>
-  user-edit-modal works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="cancel()" default-href="!"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Users Management</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Edit User</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-input label="Name" labelPlacement="floating" placeholder="Name"
+          [(ngModel)]="form.name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="Email" labelPlacement="floating" placeholder="Email"
+          [(ngModel)]="form.email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="Password" labelPlacement="floating" placeholder="Password"
+          [(ngModel)]="form.password"></ion-input>
+      </ion-item>
+
+      <!-- select role -->
+      <ion-item>
+        <ion-label>Role</ion-label>
+        <ion-select [(ngModel)]="form.role">
+          <ion-select-option value="admin">Admin</ion-select-option>
+          <ion-select-option value="user">User</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <br>
+      <ion-button expand="block" (click)="save()">Save</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

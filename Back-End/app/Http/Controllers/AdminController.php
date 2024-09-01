@@ -277,7 +277,7 @@ class AdminController extends Controller
         try {
             $m_user->name = $request->name;
             $m_user->email = $request->email;
-            $m_user->password = bcrypt($request->password);
+            if ($request->password) $m_user->password = bcrypt($request->password);
             $m_user->role = $request->role;
             $m_user->save();
 

@@ -120,6 +120,12 @@ export class UsersPage implements OnInit {
       return;
     }
 
+    this.toastController.create({
+      message: 'User deleted successfully',
+      duration: 2000,
+      color: 'success'
+    }).then(toast => toast.present());
+
     await loading.dismiss();
 
     this.getData();
