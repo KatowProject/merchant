@@ -112,4 +112,13 @@ Route::middleware('jwt.admin')->prefix('admin')->group(function () {
     Route::delete('categories/{category}', [AdminController::class, 'deleteCategory']);
 
     Route::get('sub-categories', [AdminController::class, 'getSubCategories']);
+    Route::post('sub-categories', [AdminController::class, 'createSubCategory']);
+    Route::put('sub-categories/{subCategory}', [AdminController::class, 'updateSubCategory']);
+    Route::delete('sub-categories/{subCategory}', [AdminController::class, 'deleteSubCategory']);
+
+    Route::get('users', [AdminController::class, 'listUsers']);
+    Route::get('users/{user}', [AdminController::class, 'showUser']);
+    Route::post('users', [AdminController::class, 'createUser']);
+    Route::put('users/{user}', [AdminController::class, 'updateUser']);
+    Route::delete('users/{user}', [AdminController::class, 'deleteUser']);
 });

@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="cancel()" default-href="!"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Sub-Category Management</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Add Sub-Category</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form #orderForm="ngForm">
+        <ion-item>
+          <ion-input label="Name" labelPlacement="floating" placeholder="Category Name" name="name"
+            [(ngModel)]="form.name" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-select label="Category" label-placement="floating" placeholder="Select One" [(ngModel)]="form.category_id" name="category_id" required>
+            <ion-select-option *ngFor="let c of categories" [value]="c.id">{{ c.name }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <br>
+        <ion-button expand="block" (click)="save()" [disabled]="!orderForm.valid">Save</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

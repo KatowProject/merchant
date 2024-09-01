@@ -31,6 +31,13 @@
         </ion-item>
       </ion-menu-toggle>
 
+      <ion-menu-toggle auto-hide="true">
+        <ion-item routerLink="/admin/subcategory" routerDirection="root">
+          <ion-icon name="list-outline" slot="start"></ion-icon>
+          <ion-label>Sub Kategori</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
       <!-- Pesanan -->
       <ion-menu-toggle auto-hide="true">
         <ion-item routerLink="/admin/orders" routerDirection="root">
@@ -48,6 +55,12 @@
       </ion-menu-toggle>
     </ion-list>
 
+
+    <!-- logout in btomm -->
+    <ion-button expand="block" fill="clear" (click)="logout()">
+      <ion-icon name="log-out-outline" slot="start"></ion-icon>
+      Logout
+    </ion-button>
   </ion-content>
 </ion-menu>
 <div id="main-content">

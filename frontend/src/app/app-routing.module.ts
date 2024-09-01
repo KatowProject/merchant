@@ -46,7 +46,7 @@ const routes: Routes = [
       {
         path: 'account',
         loadChildren: () => import('./user/account/account.module').then(m => m.AccountPageModule)
-      }
+      },
     ]
   },
   {
@@ -77,9 +77,14 @@ const routes: Routes = [
       {
         path: 'users',
         loadChildren: () => import('./admin/users/users.module').then(m => m.UsersPageModule)
-      }
+      },
+      {
+        path: 'subcategory',
+        loadChildren: () => import('./admin/sub-category/sub-category.module').then(m => m.SubCategoryPageModule)
+      },
     ]
   },
+
 ];
 @NgModule({
   imports: [

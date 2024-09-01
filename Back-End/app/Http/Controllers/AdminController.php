@@ -99,6 +99,55 @@ class AdminController extends Controller
         return response()->json($sub_categories);
     }
 
+    public function createSubCategory(Request $request)
+    {
+        $m_sub_category = new SubCategory();
+
+        try {
+            $request->validate([
+                'name' => 'required',
+                'category_id' => 'required|exists:categories,id'
+            ]);
+
+            $m_sub_category->name = $request->name;
+            $m_sub_category->category_id = $request->category_id;
+            $m_sub_category->save();
+
+            return response()->json(['message' => 'Sub Category created successfully', 'sub_category' => $m_sub_category]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function updateSubCategory(Request $request, $id)
+    {
+        $m_sub_category = SubCategory::find($id);
+
+        if (!$m_sub_category) return response()->json(['message' => 'Sub Category not found'], 404);
+
+        // get body
+        try {
+            $m_sub_category->name = $request->name;
+            $m_sub_category->category_id = $request->category_id;
+            $m_sub_category->save();
+
+            return response()->json(['message' => 'Sub Category updated successfully', 'sub_category' => $m_sub_category]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function deleteSubCategory($id)
+    {
+        $m_sub_category = SubCategory::find($id);
+
+        if (!$m_sub_category) return response()->json(['message' => 'Sub Category not found'], 404);
+
+        $m_sub_category->delete();
+
+        return response()->json(['message' => 'Sub Category deleted successfully']);
+    }
+
     public function createProduct(Request $request)
     {
         $m_product = new Product();
@@ -177,5 +226,75 @@ class AdminController extends Controller
         $m_product->delete();
 
         return response()->json(['message' => 'Product deleted successfully']);
+    }
+
+    public function listUsers()
+    {
+        $users = User::all();
+
+        return response()->json($users);
+    }
+
+    public function showUser($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) return response()->json(['message' => 'User not found'], 404);
+
+        return response()->json($user);
+    }
+
+    public function createUser(Request $request)
+    {
+        $m_user = new User();
+
+        try {
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required',
+                'role' => 'required'
+            ]);
+
+            $m_user->name = $request->name;
+            $m_user->email = $request->email;
+            $m_user->password = bcrypt($request->password);
+            $m_user->save();
+
+            return response()->json(['message' => 'User created successfully', 'user' => $m_user]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+        $m_user = User::find($id);
+
+        if (!$m_user) return response()->json(['message' => 'User not found'], 404);
+
+        // get body
+        try {
+            $m_user->name = $request->name;
+            $m_user->email = $request->email;
+            $m_user->password = bcrypt($request->password);
+            $m_user->role = $request->role;
+            $m_user->save();
+
+            return response()->json(['message' => 'User updated successfully', 'user' => $m_user]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function deleteUser($id)
+    {
+        $m_user = User::find($id);
+
+        if (!$m_user) return response()->json(['message' => 'User not found'], 404);
+
+        $m_user->delete();
+
+        return response()->json(['message' => 'User deleted successfully']);
     }
 }

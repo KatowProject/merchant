@@ -102,6 +102,42 @@ export class AdminService {
     return response;
   }
 
+  async addSubCategory(data: any): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/admin/sub-categories`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    return response;
+  }
+
+  async updateSubCategory(data: any): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/admin/sub-categories/${data.id}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    return response;
+  }
+
+  async deleteSubCategory(id: number): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/admin/sub-categories/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    return response;
+  }
 
   async addProduct(data: any): Promise<Response> {
     const formData = new FormData();
@@ -151,6 +187,54 @@ export class AdminService {
 
   async deleteProduct(id: number): Promise<Response> {
     const response = await fetch(`${environment.baseUrl}/admin/products/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    return response;
+  }
+
+  async getUsers(): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/admin/users`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    return response;
+  }
+
+  async addUser(data: any): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/admin/users`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    return response;
+  }
+
+  async updateUser(data: any): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/admin/users/${data.id}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    return response;
+  }
+
+  async deleteUser(id: number): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/admin/users/${id}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
