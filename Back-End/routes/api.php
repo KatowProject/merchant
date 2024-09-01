@@ -121,4 +121,9 @@ Route::middleware('jwt.admin')->prefix('admin')->group(function () {
     Route::post('users', [AdminController::class, 'createUser']);
     Route::put('users/{user}', [AdminController::class, 'updateUser']);
     Route::delete('users/{user}', [AdminController::class, 'deleteUser']);
+
+    Route::get('orders', [AdminController::class, 'listOrders']);
+    Route::post('orders/{order}/approve', [AdminController::class, 'approveOrder']);
+    Route::post('orders/{order}/reject', [AdminController::class, 'rejectOrder']);
+    Route::post('orders/{order}/ship', [AdminController::class, 'shipOrder']);
 });

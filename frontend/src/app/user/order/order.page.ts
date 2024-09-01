@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController, ModalController, ToastController, ViewWillEnter } from '@ionic/angular';
 import { MainService } from 'src/app/services/main.service';
 import { OrderDetailModalComponent } from '../modal/order-detail-modal/order-detail-modal.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-order',
@@ -68,4 +69,12 @@ export class OrderPage implements OnInit, ViewWillEnter {
   }
 
   confirmOrder(item: any) { }
+
+  handleImage(image: string) {
+    if (image.startsWith('http')) {
+      return image;
+    } else {
+      return `${environment.imageUrl}/${image}`;
+    }
+  }
 }

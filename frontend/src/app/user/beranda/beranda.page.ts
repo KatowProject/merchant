@@ -4,6 +4,7 @@ import { LoadingController, ModalController, ToastController } from '@ionic/angu
 
 import { MainService } from 'src/app/services/main.service';
 import { DetailProductComponent } from '../modal/detail-product/detail-product.component';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-beranda',
   templateUrl: './beranda.page.html',
@@ -105,5 +106,14 @@ export class BerandaPage implements OnInit {
     this.dataFiltered = this.discovery.products.filter((product: any) => {
       return product.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
+  }
+
+  /////
+  handleImage(image: string) {
+    if (image.startsWith('http')) {
+      return image;
+    } else {
+      return `${environment.imageUrl}/${image}`;
+    }
   }
 }

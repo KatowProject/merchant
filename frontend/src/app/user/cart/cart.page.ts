@@ -3,6 +3,7 @@ import { LoadingController, ModalController, ToastController } from '@ionic/angu
 import { MainService } from 'src/app/services/main.service';
 import { ViewWillEnter } from '@ionic/angular';
 import { PlaceOrderModalComponent } from '../modal/place-order-modal/place-order-modal.component';
+import { environment } from 'src/environments/environment';
 
 interface Cart {
   carts: any[];
@@ -173,4 +174,14 @@ export class CartPage implements OnInit, ViewWillEnter {
 
     loading.dismiss();
   }
+
+  /////
+  handleImage(image: string) {
+    if (image.startsWith('http')) {
+      return image;
+    } else {
+      return `${environment.imageUrl}/${image}`;
+    }
+  }
+
 }

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-order-detail-modal',
@@ -17,5 +18,13 @@ export class OrderDetailModalComponent implements OnInit {
 
   cancel() {
     this.modalController.dismiss();
+  }
+
+  handleImage(image: string) {
+    if (image.startsWith('http')) {
+      return image;
+    } else {
+      return `${environment.imageUrl}/${image}`;
+    }
   }
 }

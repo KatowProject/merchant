@@ -13,7 +13,7 @@
           <ion-col size="12" style="padding-left: 10px; padding-right: 10px;">
             <ion-item (click)="orderDetail(item)">
               <ion-thumbnail slot="start">
-                <img alt="Silhouette of mountains" src="{{ item.products[0].image }}"
+                <img alt="Silhouette of mountains" src="{{ handleImage(item.products[0].image) }}"
                   style="border-radius: 5px;" />
               </ion-thumbnail>
               <ion-label>

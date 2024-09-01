@@ -297,4 +297,48 @@ class AdminController extends Controller
 
         return response()->json(['message' => 'User deleted successfully']);
     }
+
+    public function listOrders()
+    {
+        $orders = Order::with('user', 'products')->get();
+
+        return response()->json($orders);
+    }
+
+    public function approveOrder($id)
+    {
+        $order = Order::find($id);
+
+        if (!$order) return response()->json(['message' => 'Order not found'], 404);
+
+        $order->status = 'processing';
+        $order->save();
+
+        return response()->json(['message' => 'Order approved successfully']);
+    }
+
+    public function rejectOrder($id)
+    {
+        $order = Order::find($id);
+
+        if (!$order) return response()->json(['message' => 'Order not found'], 404);
+
+        $order->status = 'rejected';
+        $order->save();
+
+        return response()->json(['message' => 'Order rejected successfully']);
+    }
+
+    public function shipOrder($id)
+    {
+        $order = Order::find($id);
+
+        if (!$order) return response()->json(['message' => 'Order not found'], 404);
+
+        $order->status = 'completed';
+        $order->save();
+
+        return response()->json(['message' => 'Order shipped successfully']);
+    }
+    
 }

@@ -243,4 +243,48 @@ export class AdminService {
 
     return response;
   }
+
+  async getAllOrders(): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/admin/orders`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    return response;
+  }
+
+  async acceptOrder(id: number): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/admin/orders/${id}/approve`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    return response;
+  }
+
+  async declineOrder(id: number): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/admin/orders/${id}/reject`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    return response;
+  }
+
+  async shipOrder(id: number): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/admin/orders/${id}/ship`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    return response;
+  }
 }
