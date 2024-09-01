@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { AdminService } from 'src/app/services/admin.service';
 import { ProductAddModalComponent } from '../modal/product-add-modal/product-add-modal.component';
 import { environment } from 'src/environments/environment';
@@ -17,7 +17,8 @@ export class ProductsPage implements OnInit {
     private adminService: AdminService,
     private modalController: ModalController,
     private loadingController: LoadingController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -80,8 +81,55 @@ export class ProductsPage implements OnInit {
     this.getData();
   }
 
-  deleteProduct(id: number) {
-    console.log('Delete Product', id);
+  async confirmDeleteProduct(id: number) {
+    const alert = await this.alertController.create({
+      header: 'Delete Product',
+      message: 'Are you sure you want to delete this product?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            this.deleteProduct(id);
+          }
+        }
+      ]
+    });
+
+    alert.present();
+  }
+
+  async deleteProduct(id: number) {
+    const loading = await this.loadingController.create({
+      message: 'Deleting...',
+      spinner: 'bubbles'
+    });
+
+    await loading.present();
+
+    const response = await this.adminService.deleteProduct(id);
+    if (response.status !== 200) {
+      this.toastController.create({
+        message: 'Failed to delete data',
+        duration: 2000,
+        color: 'danger'
+      }).then(toast => toast.present());
+
+      await loading.dismiss();
+      return;
+    }
+
+    this.toastController.create({
+      message: 'Data deleted successfully',
+      duration: 2000,
+      color: 'success'
+    }).then(toast => toast.present());
+
+    await loading.dismiss();
+    this.getData();
   }
 
   //////

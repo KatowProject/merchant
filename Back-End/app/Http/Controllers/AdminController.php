@@ -45,6 +45,53 @@ class AdminController extends Controller
 
         return response()->json($categories);
     }
+
+    public function createCategory(Request $request)
+    {
+        $m_category = new Category();
+
+        try {
+            $request->validate([
+                'name' => 'required'
+            ]);
+
+            $m_category->name = $request->name;
+            $m_category->save();
+
+            return response()->json(['message' => 'Category created successfully', 'category' => $m_category]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function updateCategory(Request $request, $id)
+    {
+        $m_category = Category::find($id);
+
+        if (!$m_category) return response()->json(['message' => 'Category not found'], 404);
+
+        // get body
+        try {
+            $m_category->name = $request->name;
+            $m_category->save();
+
+            return response()->json(['message' => 'Category updated successfully', 'category' => $m_category]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function deleteCategory($id)
+    {
+        $m_category = Category::find($id);
+
+        if (!$m_category) return response()->json(['message' => 'Category not found'], 404);
+
+        $m_category->delete();
+
+        return response()->json(['message' => 'Category deleted successfully']);
+    }
+
     public function getSubCategories()
     {
         $sub_categories = SubCategory::all();
@@ -87,5 +134,48 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
+    }
+
+    public function updateProduct(Request $request, $id)
+    {
+        $m_product = Product::find($id);
+
+        if (!$m_product) return response()->json(['message' => 'Product not found'], 404);
+
+        // get body
+        try {
+            $m_product->name = $request->name;
+            $m_product->description = $request->description;
+            $m_product->price = $request->price;
+            $m_product->stock = $request->stock;
+            $m_product->category_id = $request->category_id;
+            $m_product->sub_category_id = $request->sub_category_id;
+
+            if ($request->hasFile('image')) {
+                // upload gambar
+                $image = $request->file('image');
+                $image_name = time() . '.' . $image->extension();
+                $image->move(public_path('images'), $image_name);
+
+                $m_product->image = 'images/' . $image_name;
+            }
+
+            $m_product->save();
+
+            return response()->json(['message' => 'Product updated successfully', 'product' => $m_product]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function deleteProduct($id)
+    {
+        $m_product = Product::find($id);
+
+        if (!$m_product) return response()->json(['message' => 'Product not found'], 404);
+
+        $m_product->delete();
+
+        return response()->json(['message' => 'Product deleted successfully']);
     }
 }

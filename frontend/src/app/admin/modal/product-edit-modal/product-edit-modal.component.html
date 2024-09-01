@@ -4,7 +4,7 @@
       <ion-back-button (click)="cancel()" default-href="!"></ion-back-button>
     </ion-buttons>
 
-    <ion-title>Add Product</ion-title>
+    <ion-title>Edit Product</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -40,7 +40,7 @@
           <ion-card>
             <ion-card-content>
               <!-- show image -->
-              <img alt="form.name" id="image" src="{{ form.image }}" *ngIf="form.image" required>
+              <img [alt]="form.name" id="image" src="{{ handleImage(form.image) }}" *ngIf="form.image" required>
 
               <ion-item>
                 <ion-icon lazy="true" slot="start" name="image"></ion-icon>

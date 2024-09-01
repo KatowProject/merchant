@@ -41,6 +41,56 @@ export class AdminService {
     return response;
   }
 
+  async editCategory(id: number, name: string): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/admin/categories/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name })
+    });
+
+    return response;
+  }
+
+  async addCategory(name: string): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/admin/categories`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name })
+    });
+
+    return response;
+  }
+
+  async updateCategory(id: number, name: string): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/admin/categories/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name })
+    });
+
+    return response;
+  }
+
+  async deleteCategory(id: number): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/admin/categories/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    return response;
+  }
+
   async subCategories(): Promise<Response> {
     const response = await fetch(`${environment.baseUrl}/admin/sub-categories`, {
       method: 'GET',
@@ -69,6 +119,42 @@ export class AdminService {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: formData
+    });
+
+    return response;
+  }
+
+  async updateProduct(data: any): Promise<Response> {
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('description', data.description);
+    formData.append('price', data.price);
+    formData.append('stock', data.stock);
+    formData.append('category_id', data.category_id);
+    formData.append('sub_category_id', data.sub_category_id);
+    formData.append('_method', 'PUT');
+
+    if (data.img) {
+      formData.append('image', data.img);
+    }
+
+    const response = await fetch(`${environment.baseUrl}/admin/products/${data.id}`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: formData
+    });
+
+    return response;
+  }
+
+  async deleteProduct(id: number): Promise<Response> {
+    const response = await fetch(`${environment.baseUrl}/admin/products/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
     });
 
     return response;

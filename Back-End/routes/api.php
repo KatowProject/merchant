@@ -103,7 +103,13 @@ Route::middleware('jwt.admin')->prefix('admin')->group(function () {
 
     Route::get('products', [AdminController::class, 'getProducts']);
     Route::post('products', [AdminController::class, 'createProduct']);
+    Route::put('products/{product}', [AdminController::class, 'updateProduct']);
+    Route::delete('products/{product}', [AdminController::class, 'deleteProduct']);
 
     Route::get('categories', [AdminController::class, 'getCategories']);
+    Route::post('categories', [AdminController::class, 'createCategory']);
+    Route::put('categories/{category}', [AdminController::class, 'updateCategory']);
+    Route::delete('categories/{category}', [AdminController::class, 'deleteCategory']);
+
     Route::get('sub-categories', [AdminController::class, 'getSubCategories']);
 });

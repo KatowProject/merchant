@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { AdminService } from 'src/app/services/admin.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-edit-modal',
@@ -29,6 +30,7 @@ export class ProductEditModalComponent implements OnInit {
     console.log(this.item);
 
     this.form = {
+      id: this.item.id,
       name: this.item.name,
       price: this.item.price,
       stock: this.item.stock,
@@ -103,6 +105,38 @@ export class ProductEditModalComponent implements OnInit {
   }
 
   async save() {
-    console.log(this.form);
+    const res = await this.adminService.updateProduct(this.form);
+
+    if (res.status !== 200) {
+      const toast = await this.toastController.create({
+        message: 'Update failed',
+        duration: 2000,
+        color: 'danger'
+      });
+
+      toast.present();
+    }
+
+    const toast = await this.toastController.create({
+      message: 'Update successful',
+      duration: 2000,
+      color: 'success'
+    });
+
+    toast.present();
+
+    this.modalController.dismiss({
+      status: 'success',
+      data: this.form
+    });
+  }
+
+  ///////
+  handleImage(image: string) {
+    if (image.startsWith('http')) {
+      return image;
+    } else {
+      return `${environment.imageUrl}/${image}`;
+    }
   }
 }

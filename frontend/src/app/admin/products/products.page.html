@@ -18,7 +18,7 @@
     <ion-row>
       <ion-col *ngFor="let item of data" size="6">
         <ion-card>
-          <img alt="{{ item.name }}" src="{{ handleImage(item.image) }}" class="r-img" />
+          <img alt="{{ item.name }}" src="{{ handleImage(item.image) }}" class="r-img fixed-image" />
           <ion-card-header>
             <h4 class="ion-text-center font-bold ion-text-wrap" color="secondary">
               {{ item.name }}
@@ -53,7 +53,7 @@
     
             <!-- delete product -->
             <ion-col class="ion-text-center" size="6">
-              <ion-button color="danger" size="block" (click)="deleteProduct(item)">
+              <ion-button color="danger" size="block" (click)="confirmDeleteProduct(item.id)">
                 <ion-icon name="trash-outline"></ion-icon>
               </ion-button>
             </ion-col>

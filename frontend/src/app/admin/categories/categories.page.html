@@ -4,13 +4,35 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Categories</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="addCategoryModal()">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">categories</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>List of Categories</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <!-- with index list -->
+        <ion-item *ngFor="let category of categories; let i = index">
+          <ion-label>{{i + 1}}. {{ category.name }}</ion-label>
+          <ion-button (click)="edit(category)">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-button>
+
+          <ion-button (click)="confirmDelete(category)" color="danger">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

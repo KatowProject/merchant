@@ -59,6 +59,6 @@ export class LoginPage implements OnInit {
     loading.dismiss();
 
     // redirect to home page
-    this.router.navigate(['/tabs/beranda']);
+    this.router.navigate(['/']);
   }
 }
