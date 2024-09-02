@@ -132,10 +132,13 @@ export class ProductEditModalComponent implements OnInit {
   }
 
   ///////
-  handleImage(image: string) {
+  handleImage(image: string) { 
     if (image.startsWith('http')) {
       return image;
+    } else if (image.startsWith('data')) {
+      return image;
     } else {
+      console.log('test', image);
       return `${environment.imageUrl}/${image}`;
     }
   }
