@@ -138,7 +138,6 @@ export class ProductEditModalComponent implements OnInit {
     } else if (image.startsWith('data')) {
       return image;
     } else {
-      console.log('test', image);
       return `${environment.imageUrl}/${image}`;
     }
   }
