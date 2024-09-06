@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { MainService } from 'src/app/services/main.service';
 import { DetailProductComponent } from '../modal/detail-product/detail-product.component';
+import { environment } from 'src/environments/environment';
 
 interface Product {
   id: number;
@@ -117,4 +118,11 @@ export class CategoryPage implements OnInit {
     });
   }
 
+  handleImage(image: string) {
+    if (image.startsWith('http')) {
+      return image;
+    } else {
+      return `${environment.imageUrl}/${image}`;
+    }
+  }
 }

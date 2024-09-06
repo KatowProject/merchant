@@ -15,7 +15,7 @@
       <ion-list *ngFor="let item of data">
         <ion-item>
           <ion-thumbnail slot="start">
-            <img alt="item.product.name" src="{{ item.product.image }}">
+            <img alt="item.product.name" src="{{ handleImage(item.product.image) }}">
           </ion-thumbnail>
           <ion-label>
             <h2>{{ item.product.name }}</h2>

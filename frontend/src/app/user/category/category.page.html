@@ -31,7 +31,7 @@
 
     <ion-col size="6" *ngFor="let product of filteredProducts">
       <ion-card>
-        <img [src]="product.image" alt="Mi Goreng Rendang" (click)="getProductDetail(product)">
+        <img [src]="handleImage(product.image)" [alt]="product.name" (click)="getProductDetail(product)">
         <ion-card-content>
           <ion-card-title class="custom-card-title">{{ product.name }}</ion-card-title>
           <p class="small-text">Rp {{ product.price }}</p>
