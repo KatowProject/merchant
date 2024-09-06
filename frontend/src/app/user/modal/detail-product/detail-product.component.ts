@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { MainService } from 'src/app/services/main.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-detail-product',
@@ -37,5 +38,13 @@ export class DetailProductComponent implements OnInit {
     });
 
     this.modalController.dismiss();
+  }
+
+  handleImage(image: string) {
+    if (image.startsWith('http')) {
+      return image;
+    } else {
+      return `${environment.imageUrl}/${image}`;
+    }
   }
 }
