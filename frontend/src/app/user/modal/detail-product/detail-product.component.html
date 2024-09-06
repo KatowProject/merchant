@@ -10,7 +10,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-card>
-    <img alt="Silhouette of mountains" src={{ handleImage(item.image) }} />
+    <img alt="Silhouette of mountains" src="{{ handleImage(item.image) }}" />
     <ion-card-header>
       <ion-card-title>{{ item.name }}</ion-card-title>
       <ion-card-subtitle><b>{{ item.price | currency: 'Rp': 'symbol' }}</b></ion-card-subtitle>
